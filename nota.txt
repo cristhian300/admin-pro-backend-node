@@ -1,0 +1,23 @@
+--crear package.json
+npm init -y
+
+--express.js
+
+https://expressjs.com/en/starter/installing.html
+npm install express
+
+--install nodemon para actaulizar instantaneamente
+--https://www.npmjs.com/package/nodemon
+
+npm install -g nodemon 
+
+
+---https://mongoosejs.com/  ORM
+npm i mongoose 
+
+
+----install ambientes
+npm i dotenv
+
+---install cors
+npm i cors
