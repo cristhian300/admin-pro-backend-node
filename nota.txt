@@ -21,3 +21,8 @@ npm i dotenv
 
 ---install cors
 npm i cors
+
+--validadores
+npm i express-validator
+
+
