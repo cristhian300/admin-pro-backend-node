@@ -7,14 +7,14 @@ const cors = require('cors')
 
 
 
-//crear Servidor de express
+//base -- crear Servidor de express
 const app =express();
 
-//configurar cors
+//configurar cors acceso a cualquier dominio
 app.use(cors())
 
-//lectura y parseo body 
- app.use(express.json());
+//lectura y parseo body ** leer entrada request del servicio
+app.use(express.json());
 dbConnection();
 
 // console.log(process.env);

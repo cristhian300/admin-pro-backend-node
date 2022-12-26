@@ -6,7 +6,7 @@ npm init -y
 https://expressjs.com/en/starter/installing.html
 npm install express
 
---install nodemon para actaulizar instantaneamente
+--install nodemon para actualizar instantaneamente
 --https://www.npmjs.com/package/nodemon
 
 npm install -g nodemon 
@@ -16,7 +16,7 @@ npm install -g nodemon
 npm i mongoose 
 
 
-----install ambientes
+----install ambientes para key configuraciones
 npm i dotenv
 
 ---install cors
@@ -24,5 +24,8 @@ npm i cors
 
 --validadores
 npm i express-validator
+
+--encriptar contraseña
+npm i bcryptjs
 
 
