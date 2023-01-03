@@ -28,4 +28,8 @@ npm i express-validator
 --encriptar contraseña
 npm i bcryptjs
 
+--------------------------
+--para  token
+npm i jsonwebtoken
+
 
