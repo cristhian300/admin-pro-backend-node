@@ -1,6 +1,7 @@
 const Usuario = require('../models/usuario');
 const { response } = require('express')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const { generarJWT } = require('../helpers/jwt');
 
 
 const getUsuarios = async (req, res) => {
@@ -12,7 +13,9 @@ const getUsuarios = async (req, res) => {
     res.json({
 
         ok: true,
-        usuarios
+        usuarios,
+      //viene del middleware
+      //  uid:req.uid
     })
 }
 
@@ -40,12 +43,19 @@ const creandoUsuarios = async (req, res = response) => {
         //Encriptar contraseña
         const salt = bcrypt.genSaltSync();
         usuario.password = bcrypt.hashSync(password, salt);
+         /////////////////////////////
+        
+       
 
         await usuario.save();
+
+         const token =  await  generarJWT(usuario.id)
+
         res.json({
 
             ok: true,
-            usuario
+            usuario,
+            token
         })
 
     } catch (error) {

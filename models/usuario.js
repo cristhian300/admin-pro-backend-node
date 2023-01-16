@@ -28,9 +28,10 @@ const UsuarioSchema = Schema({
     google:{
         type:Boolean,
         default:false     
-    }
+    },
 });
 
+//solo para configurar que mostrar y como mostrar
 UsuarioSchema.method('toJSON',function ( ) {
     const {__v, _id,password, ...object} = this.toObject();
     object.uid= _id;
