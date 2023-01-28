@@ -6,16 +6,29 @@ const { generarJWT } = require('../helpers/jwt');
 
 const getUsuarios = async (req, res) => {
 
-    const usuarios = await Usuario.find({}, 'nombre email role google');
+    const desde = Number(req.query.desde) || 0
 
-    //marca el tipo de error 
-    //res.status(400).json({
+    // const usuarios = await Usuario.find({}, 'nombre email role google')
+    // .skip(desde)
+    // .limit(10);
+
+    // const total = await Usuario.count();
+
+    const [usuarios, total ] = await Promise.all([
+        Usuario.find({}, 'nombre email role google')
+            .skip(desde)
+            .limit(10),
+        Usuario.count()
+
+    ])
+
+
     res.json({
 
         ok: true,
         usuarios,
-      //viene del middleware
-      //  uid:req.uid
+        total
+
     })
 }
 
@@ -43,13 +56,13 @@ const creandoUsuarios = async (req, res = response) => {
         //Encriptar contraseña
         const salt = bcrypt.genSaltSync();
         usuario.password = bcrypt.hashSync(password, salt);
-         /////////////////////////////
-        
-       
+        /////////////////////////////
+
+
 
         await usuario.save();
 
-         const token =  await  generarJWT(usuario.id)
+        const token = await generarJWT(usuario.id)
 
         res.json({
 
