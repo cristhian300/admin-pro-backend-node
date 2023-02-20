@@ -1,14 +1,29 @@
 
 
 
-const { response } = require("express");
-const medico = require("../models/medico");
-const usuario = require("../models/usuario");
-const hospital = require("../models/usuario");
+const { response } = require("express")
+const Usuario = require('../models/usuario')
+const Medicos = require('../models/medico')
+const Hospital = require('../models/hospital')
 
 const getTodos = async (req, res = response) => {
 
     const busqueda = req.params.busqueda;
+    const regex = new RegExp(busqueda, 'i');
+
+    /* const usuarios = await Usuario.find({ nombre: regex });
+     const medicos = await Medicos.find({ nombre: regex });
+     const hospital = await Hospital.find({ nombre: regex });
+ */
+
+    const [usuarios,
+        medicos,
+        hospital] = await Promise.all([
+            await Usuario.find({ nombre: regex }),
+            await Medicos.find({ nombre: regex }),
+            await Hospital.find({ nombre: regex })
+        ])
+
 
 
     const regex = new RegExp(busqueda, 'i');
@@ -24,51 +39,42 @@ const getTodos = async (req, res = response) => {
     //     const medicos =await  medico.find({ nombre : regex})
     //     const hospitales =await  hospital.find({ nombre : regex})
     res.json({
-
         ok: true,
-        msg: 'todo ok',
         usuarios,
         medicos,
-        hospitales
-    })
+        hospital
+    });
 
 }
 
-const getDocumentosColeccion = async (req, res = response) => {
+
+
+const getDocumentosColleccion =async (req, resp = response) => {
 
     const busqueda = req.params.busqueda;
     const tabla = req.params.tabla;
 
+    console.log('tabla',tabla);
+   const regExp = new RegExp(busqueda,'i')
 
-   switch (tabla) {
-    case 'usuario':
-        
-        break;
-   
-    default:
-        break;
-   }
+    switch (tabla) {
+        case 'usuarios':
+            const data = await Usuario.find({ nombre: regExp })
 
+            resp.json({
+                ok: true,
+                resultado:data
+            })
+            break;
 
-    const regex = new RegExp(busqueda, 'i');
-
-    const [usuarios, medicos, hospitales] = await Promise.all([
-
-        usuario.find({ nombre: regex }),
-        medico.find({ nombre: regex }),
-        hospital.find({ nombre: regex }),]
-    )
-
-     
-    res.json({
-
-        ok: true,
-        msg: 'todo ok',
-        usuarios,
-        medicos,
-        hospitales
-    })
+        default:
+           
+        resp.status(400).json({
+            ok:false,
+            msg:'La tabla tiene que ser usuarios/medicos/hospitales'
+        })
+    }
 
 }
 
-module.exports = { getTodos }
+module.exports = { getTodos,getDocumentosColleccion }
