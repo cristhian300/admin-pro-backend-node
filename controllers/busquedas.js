@@ -26,14 +26,7 @@ const getTodos = async (req, res = response) => {
 
 
 
-    const regex = new RegExp(busqueda, 'i');
 
-    const [usuarios, medicos, hospitales] = await Promise.all([
-
-        usuario.find({ nombre: regex }),
-        medico.find({ nombre: regex }),
-        hospital.find({ nombre: regex }),]
-    )
 
     //    const usuarios =await usuario.find({ nombre : regex})
     //     const medicos =await  medico.find({ nombre : regex})
@@ -49,32 +42,46 @@ const getTodos = async (req, res = response) => {
 
 
 
-const getDocumentosColleccion =async (req, resp = response) => {
+const getDocumentosColleccion = async (req, resp = response) => {
 
     const busqueda = req.params.busqueda;
     const tabla = req.params.tabla;
 
-    console.log('tabla',tabla);
-   const regExp = new RegExp(busqueda,'i')
+    console.log('tabla', tabla);
+    const regExp = new RegExp(busqueda, 'i')
 
+    let data = [];
     switch (tabla) {
         case 'usuarios':
-            const data = await Usuario.find({ nombre: regExp })
+            data = await Usuario.find({ nombre: regExp })
 
-            resp.json({
-                ok: true,
-                resultado:data
-            })
+
             break;
 
+        case 'medicos':
+            data = await Medicos.find({ nombre: regExp })
+                .populate('usuario','nombre img')
+                .populate('hospital','nombre img')
+            break;
+
+        case 'hospitales':
+            data = await Hospital.find({ nombre: regExp })
+            .populate('usuario','nombre img')
+            break;
         default:
-           
-        resp.status(400).json({
-            ok:false,
-            msg:'La tabla tiene que ser usuarios/medicos/hospitales'
-        })
+
+            resp.status(400).json({
+                ok: false,
+                msg: 'La tabla tiene que ser usuarios/medicos/hospitales'
+            })
+
+
     }
 
+    resp.json({
+        ok: true,
+        resultados: data
+    })
 }
 
-module.exports = { getTodos,getDocumentosColleccion }
+module.exports = { getTodos, getDocumentosColleccion }
