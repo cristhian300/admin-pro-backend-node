@@ -14,8 +14,8 @@ const generarJWT = (uid) => {
             if (err) {
                 console.log(err);
                 reject('No se pudo generar el JWT')
-              //  reject(err)
-            } else{
+                //  reject(err)
+            } else {
                 resolve(token);
             }
 
@@ -25,4 +25,4 @@ const generarJWT = (uid) => {
 
 }
 
-module.exports = {generarJWT}
+module.exports = { generarJWT }

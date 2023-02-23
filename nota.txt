@@ -33,3 +33,12 @@ npm i bcryptjs
 npm i jsonwebtoken
 
 
+-----------------------------
+--para carga archivos
+npm i express-fileupload
+-------------------------------
+--para id de imagenes
+npm install uuid
+--------------------------------
+--guarda imagenes 
+cloud binary
