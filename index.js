@@ -17,6 +17,9 @@ app.use(cors())
 app.use(express.json());
 dbConnection();
 
+//configurar carpeta publica
+app.use(express.static('public'));
+
 // console.log(process.env);
 
 
