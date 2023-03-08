@@ -9,9 +9,9 @@ const usuario = require('../models/usuario');
 const getHospitales = async (req, res) => {
 
 
-   const hospitalDB = await Hospital.find().populate('usuario','nombre img')
+    const hospitalDB = await Hospital.find().populate('usuario', 'nombre img')
 
-   //console.log('Data hospital',hospitalDB);
+    //console.log('Data hospital',hospitalDB);
 
     res.json({
 
@@ -33,7 +33,7 @@ const crearHospital = async (req, res = response) => {
 
 
         console.log("Crear Hospital - id usuario", uid);
-      const hospitalDb =   await hospital.save();
+        const hospitalDb = await hospital.save();
 
         res.json({
 
@@ -54,27 +54,79 @@ const crearHospital = async (req, res = response) => {
 
 
 
-const actualizartHospital = async (req, res) => {
+const actualizartHospital = async (req, res = response) => {
+
+    const id = req.params.id
+    try {
+        const hospitaldb = await Hospital.findById(id)
+
+        if (!hospitaldb) {
+
+            return res.status(404).json({
+                
+                msg: 'hospital no encontrado por id',
+                ok: true,
+                
+            })
+        }
+
+        //hospitaldb.nombre = req.body.nombre;
+ 
+        const hospitalUpdate = await Hospital.findByIdAndUpdate(id,req.body,{new:true})
+
+        res.json({
+
+            ok: true,
+            msg: 'actualizartHospital',
+            hospitalUpdate
+
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false
+        })
+
+    }
+
+}
 
 
-    res.json({
+const borrartHospital = async (req, res=response) => {
 
+    const id =req.params.id
+try {
+    const hospitaldb = await Hospital.findById(id)
+
+    if (!hospitaldb) {
+
+        return res.status(404).json({
+            
+            msg: 'hospital no encontrado por id',
+            ok: true,
+            
+        })
+    }
+
+      await Hospital.findByIdAndDelete(id)
+      res.json({
+    
         ok: true,
-        msg: 'actualizartHospital',
+        msg:'hospital eliminado'
+    
+    })
 
+} catch (error) {
+    
+    res.status(500).json({
+    
+        ok: false,
+        
+    
     })
 }
 
 
-const borrartHospital = async (req, res) => {
-
-
-    res.json({
-
-        ok: true,
-        msg: 'borrartHospital',
-
-    })
 }
 
 module.exports = {

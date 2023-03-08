@@ -3,7 +3,7 @@ const client = new OAuth2Client(process.env.GOOOGLE_SECRET);
 
 
 async function googleVerify( token ) {
-
+//token generado al hacer click
   const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.GOOGLE_ID,  // Specify the CLIENT_ID of the app that accesses the backend

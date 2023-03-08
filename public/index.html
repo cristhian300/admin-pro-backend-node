@@ -21,7 +21,7 @@
         body: JSON.stringify({token:response.credential})
         })
         .then(resp =>resp.json())
-        .then(data => console.log('Nuestra Data',data))
+        .then(data => console.log('Nuestro Server',data))
         .catch(console.log())
       }
       window.onload = function () {

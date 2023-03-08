@@ -13,18 +13,21 @@ router.get('/', getHospitales)
 
 router.post('/', [
     validarJWT,
-    check('nombre','El nombre es requerido').not().isEmpty(),
+    check('nombre', 'El nombre es requerido').not().isEmpty(),
     validarCampos
 ], crearHospital);
 
 
 router.put('/:id',
     [
-
+        validarJWT,
+        check('nombre', 'El nombre es requerido').not().isEmpty(),
+        validarCampos
     ]
     , actualizartHospital);
 
 router.delete('/:id',
+    validarJWT,
     borrartHospital);
 
 
