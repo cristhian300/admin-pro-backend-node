@@ -49,3 +49,9 @@ https://developers.google.com/identity/gsi/web/guides/overview
 To validate an ID token in Node.js, use the Google Auth Library for Node.js. Install the library:
 https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
 npm install google-auth-library --save
+
+----------------------------------------------------------------------------
+
+instalar axios para consumir apis externas
+npm i axios
+----------------------------------------
