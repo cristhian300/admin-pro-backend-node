@@ -55,3 +55,5 @@ npm install google-auth-library --save
 instalar axios para consumir apis externas
 npm i axios
 ----------------------------------------
+
+npm install @hapi/boom

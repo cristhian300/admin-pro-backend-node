@@ -3,6 +3,7 @@ const { response } = require('express')
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
 const axios = require('axios');
+const boom = require("@hapi/boom");
 
 const getUsuarios = async (req, res) => {
 
@@ -177,10 +178,84 @@ const borrarUsuario = async (req, res = response) => {
 const usuarioByApi = async (req, res = response) => {
 
 
+    try {
 
-    getTokenApi('cristhian8731', '123456').then(
-        x => console.log('resultado', x) 
-     )
+        result = {
+            error: false,
+           // msg: UserMessages.userMessages.kyc.start[language],
+            data: null,
+        };
+
+        var rpGetTokenApi = await getTokenApi('cristhian8731@gmail.com', '123456')
+        console.log('rpGetTokenApi', rpGetTokenApi);
+
+        if (rpGetTokenApi.error) {
+            //throw new Error(rpGetTokenApi.msg);
+            res.send( rpGetTokenApi );
+            
+        }
+
+        result.data = { token: rpGetTokenApi }
+        
+        res.status(200).send(result);
+    }
+    catch (err) {
+        res.send( err );
+       // res.send(boom.badData(err));
+        throw boom.badData(err);
+        
+    }
+    //     rpGetTokenApi.then(resu => {
+    //         console.log('resu', resu.data);
+    //         console.log('resu', resu.status);
+    //         console.log('resu', resu.header);
+    //         console.log('resu', resu);
+    //         if (resu.status == 200) {
+
+    //             return res.json({
+    //                 ok: true
+    //             })
+    //         }
+    //         else {
+    //             return res.json({
+    //                 ok: false
+    //             })
+    //         }
+
+    //     })
+    // } catch (error) {
+    //     return res.json({
+    //         ok: false
+    //     })
+    // }
+
+
+    //    .catch(error => {
+
+    //         return res.json({
+    //             ok: false
+    //         })
+    //     })
+    //rpPrincipal Promise { <pending> } 
+
+
+
+    // .then(
+    //     x => {
+    //         console.log('resultado', x)
+
+    //         return res.json({
+    //             ok: true
+    //         })
+    //     }
+    // )
+    // .catch(error => {
+
+    //     return res.json({
+    //         ok: false
+    //     })
+    // })
+
 
 
 
@@ -212,34 +287,70 @@ const usuarioByApi = async (req, res = response) => {
 }
 
 
-const getTokenApi = (email, password) => {
-    var data = JSON.stringify({
-        "email": "cristhian8731@gmail.com",
-        "password": "123456"
-    });
+const getTokenApi = async (email, password) => {
 
-    var config = {
-        method: 'post',
-        url: 'http://localhost:3001/api/login',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        data: data
-    };
-
-    return axios(config)
-        .then(function (response) {
-            console.log('api inicial token', JSON.stringify(response.data));
-
-            return response.data
-
-        })
-        .catch(function (error) {
-            console.log(error);
-
+    try {
+        var data = JSON.stringify({
+            "email": email,
+            "password": password
         });
 
+        var config = {
+            method: 'post',
+            url: 'http://localhost:3001/api/loginn',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+        const respuesta = await axios(config)
+        console.log('respuesta getTokenApi', respuesta);
+        return respuesta.data
+    } catch (error) {
+        console.log('error getTokenApi', error);
+        return respError(error)
+    }
+
+
+    // .then(function (response) {
+    //     console.log('api total', response);
+    //     console.log('api inicial token', JSON.stringify(response.data));
+
+    //     return response.data
+
+    // })
+    // .catch(function (error) {
+
+    //     if (error.response) {
+    //         console.log('error.response.data');
+    //         console.log(error.response.data);
+    //         console.log(error.response.status);
+    //         console.log(error.response.header);
+    //         return new Error("Error response")
+    //     } else if (error.request) {
+    //         console.log('error.request');
+    //     } else {
+
+    //     }
+
+    //     console.log(error);
+
+    // });
+
 }
+
+const respError = (err) => {
+    return {
+        error: true,
+        status: err.status || err.response?.status || 400,
+        msg:
+            err.response?.statusText ||
+            err.message ||
+            err.request ||
+            err.detail ||
+            err.msg,
+    };
+};
 
 
 module.exports = {
