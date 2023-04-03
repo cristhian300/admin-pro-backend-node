@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
 const axios = require('axios');
 const boom = require("@hapi/boom");
+const authService = require("../services/auth.services");
+const usuarioService = require("../services/usuarios.services");
 
 const getUsuarios = async (req, res) => {
 
@@ -182,175 +184,81 @@ const usuarioByApi = async (req, res = response) => {
 
         result = {
             error: false,
-           // msg: UserMessages.userMessages.kyc.start[language],
+            // msg: UserMessages.userMessages.kyc.start[language],
             data: null,
         };
 
-        var rpGetTokenApi = await getTokenApi('cristhian8731@gmail.com', '123456')
+        var rpGetTokenApi = await authService.getTokenApi('cristhian8731@gmail.com', '123456')
         console.log('rpGetTokenApi', rpGetTokenApi);
 
         if (rpGetTokenApi.error) {
-            //throw new Error(rpGetTokenApi.msg);
-            res.send( rpGetTokenApi );
-            
+         //    throw new Error(rpGetTokenApi.msg);
+          
+             res.status(rpGetTokenApi.status).send(rpGetTokenApi);
+        }
+         
+
+        if (rpGetTokenApi.ok) {
+            const getUsuarios = await usuarioService.getUsuarios(rpGetTokenApi.token);
+            if (getUsuarios.error) {
+                //throw new Error(rpGetTokenApi.msg);
+                res.status(getUsuarios.status).send(getUsuarios);
+            }
+            result.data = getUsuarios
         }
 
-        result.data = { token: rpGetTokenApi }
-        
         res.status(200).send(result);
     }
     catch (err) {
-        res.send( err );
-       // res.send(boom.badData(err));
-        throw boom.badData(err);
-        
+  
+        res.send(boom.badData(err));
+      //  throw boom.badData(err);
+
     }
-    //     rpGetTokenApi.then(resu => {
-    //         console.log('resu', resu.data);
-    //         console.log('resu', resu.status);
-    //         console.log('resu', resu.header);
-    //         console.log('resu', resu);
-    //         if (resu.status == 200) {
 
-    //             return res.json({
-    //                 ok: true
-    //             })
-    //         }
-    //         else {
-    //             return res.json({
-    //                 ok: false
-    //             })
-    //         }
-
-    //     })
-    // } catch (error) {
-    //     return res.json({
-    //         ok: false
-    //     })
-    // }
-
-
-    //    .catch(error => {
-
-    //         return res.json({
-    //             ok: false
-    //         })
-    //     })
-    //rpPrincipal Promise { <pending> } 
-
-
-
-    // .then(
-    //     x => {
-    //         console.log('resultado', x)
-
-    //         return res.json({
-    //             ok: true
-    //         })
-    //     }
-    // )
-    // .catch(error => {
-
-    //     return res.json({
-    //         ok: false
-    //     })
-    // })
-
-
-
-
-    // let url = `http://localhost:${process.env.PORT}/api/usuarios`;
-
-    // var config = {
-    //     method: 'get',
-    //     url: url,
-    //     headers: {
-    //         'x-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2E5ZjlmNWI0OTQ5NTZjZDc5NDAxMWUiLCJpYXQiOjE2NzgzMTI3NTYsImV4cCI6MTY3ODM1NTk1Nn0.kdDEQskBxs7dQCm97EcOPGRsq5jTliK0EKMvMT2IuYs'
-    //     },
-
-    //     data: null
-    // };
-
-    //   axios(config)
-    //     .then(function (response) {
-    //         //  console.log(JSON.stringify(response.data));
-    //         const { nombre, email } = response.data.usuarios[0]
-
-    //         const dataRecover = { nombre, email }
-    //         console.log('recuperado', dataRecover);
-    //         res.send({ recuperado: dataRecover })
-    //     })
-    //     .catch(function (error) {
-    //         console.log(error);
-    //     });
 
 }
 
 
-const getTokenApi = async (email, password) => {
+// const getTokenApi = async (email, password) => {
 
-    try {
-        var data = JSON.stringify({
-            "email": email,
-            "password": password
-        });
+//     try {
+//         var data = JSON.stringify({
+//             "email": email,
+//             "password": password
+//         });
 
-        var config = {
-            method: 'post',
-            url: 'http://localhost:3001/api/loginn',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: data
-        };
-        const respuesta = await axios(config)
-        console.log('respuesta getTokenApi', respuesta);
-        return respuesta.data
-    } catch (error) {
-        console.log('error getTokenApi', error);
-        return respError(error)
-    }
+//         var config = {
+//             method: 'post',
+//             url: 'http://localhost:3001/api/login',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             data: data
+//         };
+//         const respuesta = await axios(config)
+//         console.log('respuesta getTokenApi', respuesta);
+//         return respuesta.data
+//     } catch (error) {
+//         console.log('error getTokenApi', error);
+//         return respError(error)
+//     }
 
 
-    // .then(function (response) {
-    //     console.log('api total', response);
-    //     console.log('api inicial token', JSON.stringify(response.data));
+// }
 
-    //     return response.data
-
-    // })
-    // .catch(function (error) {
-
-    //     if (error.response) {
-    //         console.log('error.response.data');
-    //         console.log(error.response.data);
-    //         console.log(error.response.status);
-    //         console.log(error.response.header);
-    //         return new Error("Error response")
-    //     } else if (error.request) {
-    //         console.log('error.request');
-    //     } else {
-
-    //     }
-
-    //     console.log(error);
-
-    // });
-
-}
-
-const respError = (err) => {
-    return {
-        error: true,
-        status: err.status || err.response?.status || 400,
-        msg:
-            err.response?.statusText ||
-            err.message ||
-            err.request ||
-            err.detail ||
-            err.msg,
-    };
-};
+// const respError = (err) => {
+//     return {
+//         error: true,
+//         status: err.status || err.response?.status || 400,
+//         msg:
+//             err.response?.statusText ||
+//             err.message ||
+//             err.request ||
+//             err.detail ||
+//             err.msg,
+//     };
+// };
 
 
 module.exports = {
