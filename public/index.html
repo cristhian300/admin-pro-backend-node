@@ -13,6 +13,7 @@
       var url = "http://localhost:3001/api/login/google"
 
       function handleCredentialResponse(response) {
+        //token que se enviará al backend donde se validarara el token y secret
         console.log("Encoded JWT ID token: " + response.credential);
 
         fetch(url,{
@@ -24,6 +25,7 @@
         .then(data => console.log('Nuestro Server',data))
         .catch(console.log())
       }
+
       window.onload = function () {
         google.accounts.id.initialize({
           client_id: "631666904158-chd1jhu72d4s4vb38rcdr7uvosj8uiam.apps.googleusercontent.com",
@@ -36,6 +38,6 @@
         google.accounts.id.prompt(); // also display the One Tap dialog
       }
   </script>
-  <div id="buttonDiv"></div> 
+  <div #googleBtn id="buttonDiv"></div> 
 </body>
 </html>
