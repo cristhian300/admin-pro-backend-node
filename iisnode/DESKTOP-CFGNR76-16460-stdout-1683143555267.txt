@@ -1,0 +1,2 @@
+servidor corriendo en puerto \\.\pipe\5c4bc2c1-f909-4660-8b31-964ee97bee0b
+db onLine

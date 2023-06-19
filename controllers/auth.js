@@ -2,14 +2,15 @@ const { response } = require('express')
 const Usuario = require('../models/usuario')
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
-const { googleVerify } = require('../helpers/google-verify')
+const { googleVerify } = require('../helpers/google-verify');
+
+
+
 
 const login = async (req, res = response) => {
 
     try {
-
         const { email, password } = req.body;
-
         //verifica Email
         const usuarioDb = await Usuario.findOne({ email });
 
@@ -21,7 +22,6 @@ const login = async (req, res = response) => {
                 }
             )
         }
-
         //verifica contraseña
         const validarPassword = bcrypt.compareSync(password, usuarioDb.password)
         if (!validarPassword) {
@@ -32,12 +32,8 @@ const login = async (req, res = response) => {
                 }
             )
         }
-
-
         //generar token
-
         const token = await generarJWT(usuarioDb.id);
-
         res.json({
             ok: true,
             token
@@ -107,9 +103,14 @@ const renewToken = async (req, res = response) => {
     const uid = req.uid;
     const token = await generarJWT(uid);
 
+
+    usuarioDb = await Usuario.findById(uid, 'nombre email')
+
+ 
     res.json({
         ok: true,
-        token
+        token,
+        usuario: usuarioDb
     })
 
 }
