@@ -59,3 +59,9 @@ npm i axios
 npm install @hapi/boom
 
 https://www.youtube.com/watch?v=JUYCDnqR8p0
+
+-------------------------------------------
+publicar prueba
+https://railway.app/
+
+se publico en Render
