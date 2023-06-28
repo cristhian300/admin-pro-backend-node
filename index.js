@@ -48,6 +48,8 @@ app.use('/api/todo',require('./routes/busquedas'))
 
 app.use('/api/upload',require('./routes/uploads'))
 
+app.use('/api/products',require('./routes/products'))
+
 app.listen( process.env.PORT , ()=>{
     console.log('servidor corriendo en puerto ' + process.env.PORT);
 })

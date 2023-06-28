@@ -65,3 +65,23 @@ publicar prueba
 https://railway.app/
 
 se publico en Render
+---------------------------------------------
+#rama remota
+git remote -v
+------------------------------------------------
+1 install pm2
+npm install pm2 -g
+2 leventar el aplicativo con pm2
+pm2 start index.js
+3 log
+pm2 log
+4 ver el detalle
+ pm2 list
+5 detall  es
+pm2 stop index.js
+pm2 restart index.js
+pm2 delete index.js
+--------------------------------------------------
+
+
+
