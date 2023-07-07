@@ -4,7 +4,9 @@ const ProductSchema = new Schema({
 
     name: {
         type: String,
-        required: true
+        required: true,
+        unique:true
+
     },
     details: {
         type: String,
@@ -14,7 +16,7 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
-    img: {
+    image: {
         type: String
     },
     enable: {
@@ -25,7 +27,7 @@ const ProductSchema = new Schema({
 });
 
 //solo para configurar que mostrar y como mostrar en la solicitud
-ProductSchema.method('toJson', function() {
+ProductSchema.method('toJSON', function() {
     const {__v , _id,...object} = this.toObject();
     object.uid =_id;
     return object;
@@ -33,3 +35,6 @@ ProductSchema.method('toJson', function() {
 
 
 module.exports = model("Product", ProductSchema)
+
+
+

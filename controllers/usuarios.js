@@ -48,7 +48,7 @@ const creandoUsuarios = async (req, res = response) => {
         const exisEmail = await Usuario.findOne({ email });
 
         if (exisEmail) {
-            res.status(400).json({
+           return res.status(400).json({
                 ok: false,
                 msg: 'el correo ya existe'
             })

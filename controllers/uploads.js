@@ -52,7 +52,7 @@ const fileUpload = (req, res = response) => {
 
     const nombreArchivo = `${uuidv4()}.${extensionArchivo}`; //
     const path = `./uploads/${tipo}/${nombreArchivo}`;
-    actualizarImagen(tipo, id, nombreArchivo);
+
 
 
     // Use the mv() method to place the file somewhere on your server
@@ -63,6 +63,8 @@ const fileUpload = (req, res = response) => {
                 msg: 'error al mover la imagen'
             })
         }            // return res.status(500).send(err);
+
+        actualizarImagen(tipo, id, nombreArchivo);
 
         res.json({
             ok: true,
@@ -83,19 +85,15 @@ const retornaImagen = (req, res = response) => {
     const tipo = req.params.tipo;
     const foto = req.params.foto;
 
-
+    console.log('directorio',__dirname);
     const pathImg = path.join(__dirname, `../uploads/${tipo}/${foto}`)
+    console.log('pathImg',pathImg);
     if (fs.existsSync(pathImg)) {
-
-
         res.sendFile(pathImg);
     }
     else {
         const pathImg = path.join(__dirname, `../uploads/no_img.jpg`)
-
         res.sendFile(pathImg);
     }
-
-
 }
 module.exports = { fileUpload, retornaImagen }

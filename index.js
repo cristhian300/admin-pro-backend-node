@@ -1,14 +1,14 @@
 ///console.log('hola amigos');
 
-const express  = require('express');
-const{  dbConnection} = require('./dataBase/config');
+const express = require('express');
+const { dbConnection } = require('./dataBase/config');
 require('dotenv').config();
 const cors = require('cors')
 
 
 
 //base -- crear Servidor de express
-const app =express();
+const app = express();
 
 //configurar cors acceso a cualquier dominio
 app.use(cors())
@@ -44,12 +44,14 @@ app.use('/api/hospitales', require('./routes/hospitales'))
 app.use('/api/medicos', require('./routes/medicos'))
 
 
-app.use('/api/todo',require('./routes/busquedas'))
+app.use('/api/todo', require('./routes/busquedas'))
 
-app.use('/api/upload',require('./routes/uploads'))
+app.use('/api/upload', require('./routes/uploads'))
 
-app.use('/api/products',require('./routes/products'))
 
-app.listen( process.env.PORT , ()=>{
+//for Web create 
+app.use('/api/products', require('./routes/products'))
+
+app.listen(process.env.PORT, () => {
     console.log('servidor corriendo en puerto ' + process.env.PORT);
 })

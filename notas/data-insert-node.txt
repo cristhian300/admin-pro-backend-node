@@ -1,0 +1,8 @@
+{
+  "name": "play22",
+  "details": "juego 90",
+  "price": 100,
+  "enable": true,
+  "image": "651218e9-13ef-4a2d-a66b-07839257f665.jpg",
+  "__v": 0
+}

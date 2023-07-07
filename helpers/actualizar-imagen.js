@@ -24,7 +24,6 @@ const actualizarImagen = async (tipo, id, nombreArchivo) => {
                 console.log('No es un medico por Id');
                 return false
             }
-            console.log(medico.img);
               pathViejo = `./uploads/medicos/${medico.img}`
 
             borrarImagen(pathViejo)
