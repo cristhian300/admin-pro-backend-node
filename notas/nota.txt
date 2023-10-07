@@ -1,0 +1,87 @@
+--crear package.json
+npm init -y
+
+--express.js
+
+https://expressjs.com/en/starter/installing.html
+npm install express
+
+--install nodemon para actualizar instantaneamente
+--https://www.npmjs.com/package/nodemon
+
+npm install -g nodemon 
+
+
+---https://mongoosejs.com/  ORM
+npm i mongoose 
+
+
+----install ambientes para key configuraciones
+npm i dotenv
+
+---install cors
+npm i cors
+
+--validadores
+npm i express-validator
+
+--encriptar contraseña
+npm i bcryptjs
+
+--------------------------
+--para  token
+npm i jsonwebtoken
+
+
+-----------------------------
+--para carga archivos
+npm i express-fileupload
+-------------------------------
+--para id de imagenes
+npm install uuid
+--------------------------------
+--guarda imagenes 
+cloud binary
+-------------------------------
+token google
+https://developers.google.com/identity/gsi/web/guides/overview
+-------------------------------
+To validate an ID token in Node.js, use the Google Auth Library for Node.js. Install the library:
+https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
+npm install google-auth-library --save
+
+----------------------------------------------------------------------------
+
+instalar axios para consumir apis externas
+npm i axios
+----------------------------------------
+
+npm install @hapi/boom
+
+https://www.youtube.com/watch?v=JUYCDnqR8p0
+
+-------------------------------------------
+publicar prueba
+https://railway.app/
+
+se publico en Render
+---------------------------------------------
+#rama remota
+git remote -v
+------------------------------------------------
+1 install pm2
+npm install pm2 -g
+2 leventar el aplicativo con pm2
+pm2 start index.js
+3 log
+pm2 log
+4 ver el detalle
+ pm2 list
+5 detall  es
+pm2 stop index.js
+pm2 restart index.js
+pm2 delete index.js
+--------------------------------------------------
+
+
+

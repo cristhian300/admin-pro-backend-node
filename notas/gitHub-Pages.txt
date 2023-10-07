@@ -1,0 +1,5 @@
+npm i gh-pages
+
+----------------
+
+npx gh-pages -d . 
