@@ -1,11 +1,15 @@
 const Usuario = require('../models/usuario');
 const { response } = require('express')
 const bcrypt = require('bcryptjs');
-const { generarJWT } = require('../helpers/jwt');
+ 
 const axios = require('axios');
 const boom = require("@hapi/boom");
 const authService = require("../services/auth.services");
 const usuarioService = require("../services/usuarios.services");
+const { generarJWT } = require('../helpers/jwt');
+ 
+ 
+ 
 
 const getUsuarios = async (req, res) => {
 

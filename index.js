@@ -1,7 +1,7 @@
 ///console.log('hola amigos');
 
 const express = require('express');
-const { dbConnection } = require('./dataBase/config');
+const { dbConnection } = require('./app/dataBase/config');
 require('dotenv').config();
 const cors = require('cors')
 
@@ -24,7 +24,7 @@ app.use(express.static('public'));
 
 
 
-app.use('/api/usuarios', require('./routes/usuarios'))
+app.use('/api/usuarios', require('./app/routes/usuarios'))
 // app.get('/api/usuarios',(req,res) =>{
 //     //marca el tipo de error 
 //     //res.status(400).json({
@@ -37,20 +37,20 @@ app.use('/api/usuarios', require('./routes/usuarios'))
 //         }]
 //     })
 // });
-app.use('/api/login', require('./routes/auth'))
+app.use('/api/login', require('./app/routes/auth'))
 
-app.use('/api/hospitales', require('./routes/hospitales'))
+app.use('/api/hospitales', require('./app/routes/hospitales'))
 
-app.use('/api/medicos', require('./routes/medicos'))
+app.use('/api/medicos', require('./app/routes/medicos'))
 
 
-app.use('/api/todo', require('./routes/busquedas'))
+app.use('/api/todo', require('./app/routes/busquedas'))
 
-app.use('/api/upload', require('./routes/uploads'))
+app.use('/api/upload', require('./app/routes/uploads'))
 
 
 //for Web create 
-app.use('/api/products', require('./routes/products'))
+app.use('/api/products', require('./app/routes/products'))
 
 app.listen(process.env.PORT, () => {
     console.log('servidor corriendo en puerto ' + process.env.PORT);
