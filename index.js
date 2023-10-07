@@ -37,7 +37,7 @@ app.use('/api/usuarios', require('./app/routes/usuarios'))
 //         }]
 //     })
 // });
-app.use('/api/login', require('./app/routes/auth'))
+app.use(require('./app/routes/auth'))
 
 app.use('/api/hospitales', require('./app/routes/hospitales'))
 
