@@ -1,15 +1,15 @@
+
 const Usuario = require('../models/usuario');
 const { response } = require('express')
 const bcrypt = require('bcryptjs');
- 
+
 const axios = require('axios');
 const boom = require("@hapi/boom");
 const authService = require("../services/auth.services");
 const usuarioService = require("../services/usuarios.services");
 const { generarJWT } = require('../helpers/jwt');
- 
- 
- 
+
+
 
 const getUsuarios = async (req, res) => {
 
@@ -52,7 +52,7 @@ const creandoUsuarios = async (req, res = response) => {
         const exisEmail = await Usuario.findOne({ email });
 
         if (exisEmail) {
-           return res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 msg: 'el correo ya existe'
             })
@@ -196,11 +196,11 @@ const usuarioByApi = async (req, res = response) => {
         console.log('rpGetTokenApi', rpGetTokenApi);
 
         if (rpGetTokenApi.error) {
-         //    throw new Error(rpGetTokenApi.msg);
-          
-             res.status(rpGetTokenApi.status).send(rpGetTokenApi);
+            //    throw new Error(rpGetTokenApi.msg);
+
+            res.status(rpGetTokenApi.status).send(rpGetTokenApi);
         }
-         
+
 
         if (rpGetTokenApi.ok) {
             const getUsuarios = await usuarioService.getUsuarios(rpGetTokenApi.token);
@@ -214,9 +214,9 @@ const usuarioByApi = async (req, res = response) => {
         res.status(200).send(result);
     }
     catch (err) {
-  
+
         res.send(boom.badData(err));
-      //  throw boom.badData(err);
+        //  throw boom.badData(err);
 
     }
 

@@ -24,7 +24,7 @@ app.use(express.static('public'));
 
 
 
-app.use('/api/usuarios', require('./app/routes/usuarios'))
+
 // app.get('/api/usuarios',(req,res) =>{
 //     //marca el tipo de error 
 //     //res.status(400).json({
@@ -51,6 +51,11 @@ app.use('/api/upload', require('./app/routes/uploads'))
 
 //for Web create 
 app.use('/api/products', require('./app/routes/products'))
+
+
+//login 
+app.use('/api/usuarios', require('./app/routes/usuarios'))
+app.use('/api/login', require('./app/routes/auth'))
 
 app.listen(process.env.PORT, () => {
     console.log('servidor corriendo en puerto ' + process.env.PORT);

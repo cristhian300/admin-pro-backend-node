@@ -3,14 +3,14 @@ const { check } = require('express-validator');
 const { login, googleSignIn } = require('../controllers/auth');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
-const {renewToken} = require('../controllers/auth')
+const { renewToken } = require('../controllers/auth')
 
 ///api/login
 
-const path ='/api/login'
+const path = '/api/login'
 const router = new Router();
 
-router.post(`${path}/`, [
+router.post(`/`, [
     check('email', 'El email  es obligatorio').isEmail(),
     check('password', 'El password es obligatorio').not().isEmpty(),
     validarCampos,
@@ -18,13 +18,14 @@ router.post(`${path}/`, [
 ], login)
 
 
-router.post(`${path}/google`, [
+router.post(`/google`, [
 
     check('token', 'El token de google obligatorio').not().isEmpty(),
     validarCampos
 ], googleSignIn)
 
-router.get(`${path}/renew` ,
+
+router.get(`/renew`,
     validarJWT,
     renewToken
 )
